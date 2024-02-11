@@ -5,6 +5,9 @@ import spark.Response;
 import spark.Route;
 
 public class viewcsv implements Route {
+  public viewcsv(loadcsv loadedCSV){
+
+  }
 
   @Override
   public Object handle(Request request, Response response) throws Exception {
