@@ -5,7 +5,7 @@ import com.squareup.moshi.Moshi;
 public class Serializer {
   private String message;
 
-  public Serializer(String message){
+  public Serializer(){
     this.message = message;
     this.serialize(message);
   }

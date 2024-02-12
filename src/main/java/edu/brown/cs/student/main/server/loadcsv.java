@@ -10,8 +10,7 @@ import spark.Route;
 public class loadcsv implements Route {
   public Serializer serializer;
 
-  public loadcsv(String filepath, Serializer serializer){
-    this.serializer = serializer;
+  public loadcsv(String filepath){
   }
 
 
@@ -20,7 +19,7 @@ public class loadcsv implements Route {
     String filename = request.queryParams("filename");
     try{
       FileReader fReader = new FileReader(filename);
-      return
+      this.serializer = new Serializer(LCSVSuccessResponse);
     }
     catch{
 
@@ -33,6 +32,12 @@ public class loadcsv implements Route {
       this("success", responseMap);
     }
     }
+
+  public record LCSVErrorResponse(String response_type, Map<String, Object> responseMap) {
+    public LCSVErrorResponse(Map<String, Object> responseMap) {
+      this("error", responseMap);
+    }
+  }
 
 
 }
