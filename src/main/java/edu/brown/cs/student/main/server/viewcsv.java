@@ -21,7 +21,14 @@ public class viewcsv implements Route {
   public Object handle(Request request, Response response) throws Exception {
     Map<String, Object> responseMap = new HashMap<>();
     String headers = request.queryParams("headers");
-    if (!this.state.getLoadedVal()) {
+    if (this.state != null){
+      if (!this.state.getLoadedVal()) {
+        responseMap.put("error_datasource", "No CSV file has been loaded!");
+        Serializer serializer = new Serializer();
+        return serializer.serialize(responseMap);
+      }
+    }
+    else{
       responseMap.put("error_datasource", "No CSV file has been loaded!");
       Serializer serializer = new Serializer();
       return serializer.serialize(responseMap);
@@ -32,9 +39,10 @@ public class viewcsv implements Route {
       return serializer.serialize(responseMap);
     }
     responseMap.put("result","success");
-    System.out.println(this.state.getfReader());
     CSVParser<List<List<String>>> parser = new CSVParser<>(this.state.getfReader(),headers);
-    responseMap.put("data",parser.getRows());
+    List<List<String>> data = parser.parse(this.state.getfReader(),headers);
+    this.state.setContent(data);
+    responseMap.put("data",data);
     Serializer serializer = new Serializer();
     return serializer.serialize(responseMap);
 

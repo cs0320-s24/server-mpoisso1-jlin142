@@ -11,7 +11,7 @@ import spark.Response;
 import spark.Route;
 
 public class loadcsv implements Route {
-  public ParsedData data;
+  private final ParsedData data;
 
   public loadcsv(ParsedData data) {
     this.data = data;

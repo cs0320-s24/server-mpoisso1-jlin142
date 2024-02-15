@@ -8,12 +8,15 @@ import spark.Spark;
 public class Server {
   private static ParsedData state;
 
-  public Server() {}
+  public Server() {
+  }
+
 
   public static void main(String[] args) {
     int port = 3232;
     Spark.port(port);
 
+    state = new ParsedData(null,false,null);
     Spark.get("loadcsv", new loadcsv(state));
     Spark.get("searchcsv", new searchcsv(state));
     Spark.get("viewcsv", new viewcsv(state));
