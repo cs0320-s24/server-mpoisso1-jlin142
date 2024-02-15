@@ -11,7 +11,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -19,9 +18,7 @@ import spark.Route;
 public class broadband implements Route {
   private ACSDataSource acsDataSource;
 
-  public broadband(){
-
-  }
+  public broadband() {}
 
   @Override
   public Object handle(Request request, Response response) throws Exception {
@@ -48,22 +45,23 @@ public class broadband implements Route {
     return responseMap;
   }
 
-    private String sendRequest(String info) throws URISyntaxException, IOException, InterruptedException {
-      // Build a request to this BoredAPI. Try out this link in your browser, what do you see?
-      // TODO 1: Looking at the documentation, how can we add to the URI to query based
-      // on participant number?
-      HttpRequest buildBoredApiRequest =
-          HttpRequest.newBuilder()
-              .uri(new URI("http://www.boredapi.com/api/activity/"))
-              .GET()
-              .build();
+  private String sendRequest(String info)
+      throws URISyntaxException, IOException, InterruptedException {
+    // Build a request to this BoredAPI. Try out this link in your browser, what do you see?
+    // TODO 1: Looking at the documentation, how can we add to the URI to query based
+    // on participant number?
+    HttpRequest buildBoredApiRequest =
+        HttpRequest.newBuilder()
+            .uri(new URI("http://www.boredapi.com/api/activity/"))
+            .GET()
+            .build();
 
-      // Send that API request then store the response in this variable. Note the generic type.
-      HttpResponse<String> sentBoredApiResponse =
-          HttpClient.newBuilder()
-              .build()
-              .send(buildBoredApiRequest, HttpResponse.BodyHandlers.ofString());
+    // Send that API request then store the response in this variable. Note the generic type.
+    HttpResponse<String> sentBoredApiResponse =
+        HttpClient.newBuilder()
+            .build()
+            .send(buildBoredApiRequest, HttpResponse.BodyHandlers.ofString());
 
-      return sentBoredApiResponse.body();
-    }
+    return sentBoredApiResponse.body();
+  }
 }

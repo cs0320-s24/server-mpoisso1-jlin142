@@ -10,7 +10,8 @@ import java.util.regex.Pattern;
 
 public class CSVParser<T> {
   private final List<List<String>> rows;
-  public CSVParser(Reader reader, Boolean headers) {
+
+  public CSVParser(Reader reader, String headers) {
     this.rows = this.parse(reader, headers);
   }
 
@@ -22,7 +23,7 @@ public class CSVParser<T> {
    *     (Strings, files,etc.)
    * @param headers Boolean indicator of header appearance
    */
-  private List<List<String>> parse(Reader reader, Boolean headers) {
+  private List<List<String>> parse(Reader reader, String headers) {
     int rowCounter = 0;
     int numElems = 0;
     BufferedReader bufferedReader = new BufferedReader(reader);
@@ -32,10 +33,10 @@ public class CSVParser<T> {
       while ((line = bufferedReader.readLine()) != null) {
         String[] result = regexSplitCSVRow.split(line);
         List<String> row = List.of(result);
-        if (headers && rowCounter == 0) {
+        if (headers == "true" && rowCounter == 0) {
           numElems = row.size();
         }
-        if (headers && rowCounter > 0 && row.size() != numElems) {
+        if (headers == "true" && rowCounter > 0 && row.size() != numElems) {
           // Should not be doing this
           // error message should be malformed csv
           // return empty list

@@ -1,24 +1,27 @@
 package edu.brown.cs.student.main.SerializerDeserializer;
 
+import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
+import com.squareup.moshi.Types;
+import java.lang.reflect.Type;
 import java.util.Map;
 
 public class Serializer {
-  private Map<String, Object> responseMap;
 
-  public Serializer(Map<String, Object> responseMap){
-    this.responseMap = responseMap;
-    this.serialize(this.responseMap);
+  public Serializer() {
   }
 
-  String serialize(Map<String, Object> responseMap) {
+  public String serialize(Map<String, Object> responseMap) {
     try {
       Moshi moshi = new Moshi.Builder().build();
-      return moshi.adapter(responseMap.getClass()).toJson();
+      Type listType = Types.newParameterizedType(Map.class, String.class, Object.class);
+      JsonAdapter<Map<String, Object>> jsonAdapter = moshi.adapter(listType);
+      return jsonAdapter.toJson(responseMap);
     } catch (Exception e) {
       e.printStackTrace();
       throw e;
     }
   }
+
 
 }

@@ -1,28 +1,43 @@
 package edu.brown.cs.student.main.server;
 
+import edu.brown.cs.student.main.CSV.CSVParser;
+import edu.brown.cs.student.main.CSV.ParsedData;
 import edu.brown.cs.student.main.SerializerDeserializer.Serializer;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
 public class viewcsv implements Route {
-  private final CSVData state;
-  public viewcsv(CSVData state){
-    this.state = state;
+  private ParsedData state;
 
+  public viewcsv(ParsedData state) {
+    this.state = state;
   }
 
   @Override
   public Object handle(Request request, Response response) throws Exception {
     Map<String, Object> responseMap = new HashMap<>();
-    if (this.state == null) {
-      responseMap.put("error_datasource","No CSV file has been loaded!");
-      return new Serializer(responseMap);
+    String headers = request.queryParams("headers");
+    if (!this.state.getLoadedVal()) {
+      responseMap.put("error_datasource", "No CSV file has been loaded!");
+      Serializer serializer = new Serializer();
+      return serializer.serialize(responseMap);
     }
-    responseMap.put("data",this.state);
-    return new Serializer(responseMap);
-
+    responseMap.put("result","success");
+    if(headers != null){
+      CSVParser<List<List<String>>> parser = new CSVParser<>(this.state.getfReader(),headers);
+      responseMap.put("data",parser.getRows());
+      Serializer serializer = new Serializer();
+      return serializer.serialize(responseMap);
+    }
+    else{
+      CSVParser<List<List<String>>> parser = new CSVParser<>(this.state.getfReader(),"false");
+      responseMap.put("data",parser.getRows());
+      Serializer serializer = new Serializer();
+      return serializer.serialize(responseMap);
+    }
   }
 }

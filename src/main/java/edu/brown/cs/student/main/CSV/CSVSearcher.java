@@ -44,7 +44,7 @@ public class CSVSearcher {
       for (String s : row) {
         if (value.equals(s)) {
           res.add(row);
-//          System.out.println(row);
+          //          System.out.println(row);
           break;
         }
       }
@@ -91,7 +91,7 @@ public class CSVSearcher {
         List<String> row = rows.get(i);
         if (value.equals(row.get(colNum))) {
           res.add(row);
-//          System.out.println(row);
+          //          System.out.println(row);
         }
       } catch (Exception e) {
         System.err.println("Row " + i + " does not have a value for " + colName + ".");
@@ -139,7 +139,7 @@ public class CSVSearcher {
         List<String> row = rows.get(i);
         if (value.equals(row.get(colIndex))) {
           res.add(row);
-//          System.out.println(row);
+          //          System.out.println(row);
         }
       } catch (Exception e) {
         // throw error saying that col value dne

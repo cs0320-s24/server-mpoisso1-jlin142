@@ -2,22 +2,27 @@ package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
 
+import edu.brown.cs.student.main.CSV.ParsedData;
 import spark.Spark;
 
 public class Server {
-  private static CSVData state;
+  private static ParsedData state;
 
-  public Server(CSVData state){
-    this.state = state;
-  }
+  public Server() {}
+
   public static void main(String[] args) {
     int port = 3232;
     Spark.port(port);
 
-    // Setting up the handler for the GET /order and /activity endpoints
-    Spark.get("searchcsv", new searchcsv(this.state));
-    Spark.get("loadcsv", new loadcsv());
-    Spark.get("viewcsv", new viewcsv(this.state));
+    after(
+        (request, response) -> {
+          response.header("Access-Control-Allow-Origin", "*");
+          response.header("Access-Control-Allow-Methods", "*");
+        });
+
+    Spark.get("loadcsv", new loadcsv(state));
+    Spark.get("searchcsv", new searchcsv(state));
+    Spark.get("viewcsv", new viewcsv(state));
     Spark.get("broadband", new broadband());
     Spark.init();
     Spark.awaitInitialization();
