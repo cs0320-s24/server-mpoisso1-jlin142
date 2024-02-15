@@ -1,7 +1,7 @@
 package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
-import java.util.ArrayList;
+
 import spark.Spark;
 
 public class Server {
@@ -13,7 +13,7 @@ public class Server {
     Spark.get("searchcsv", new searchcsv());
     Spark.get("loadcsv", new loadcsv());
     Spark.get("viewcsv", new viewcsv());
-    Spark.get("broadband", new broadband());
+    Spark.get("broadband", new BroadbandHandler());
     Spark.init();
     Spark.awaitInitialization();
 
