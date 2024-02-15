@@ -32,7 +32,8 @@ public class broadband implements Route {
     try {
       String stateJson = this.sendRequest("state");
       String countyJson = this.sendRequest("county");
-      Activity activity = ActivityAPIUtilities.deserializeActivity(activityJson);
+      Activity activity = ActivityAPIUtilities.deserializeActivity(stateJson);
+
       // Adds results to the responseMap
       responseMap.put("state", "success");
       responseMap.put("county", activity);
