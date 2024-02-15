@@ -23,7 +23,8 @@ public class loadcsv implements Route {
     Map<String, Object> responseMap = new HashMap<>();
     try {
       FileReader fReader = new FileReader(filename);
-      this.data = new ParsedData(fReader, true);
+      this.data.setfReader(fReader);
+      this.data.setLoadedVal(true);
       responseMap.put("result", "success");
       responseMap.put("filepath", filename);
       Serializer serializer = new Serializer();

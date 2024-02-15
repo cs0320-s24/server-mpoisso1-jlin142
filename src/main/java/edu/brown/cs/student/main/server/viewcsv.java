@@ -26,18 +26,17 @@ public class viewcsv implements Route {
       Serializer serializer = new Serializer();
       return serializer.serialize(responseMap);
     }
+    if(headers == null) {
+      responseMap.put("error_bad_request","request was missing the headers field");
+      Serializer serializer = new Serializer();
+      return serializer.serialize(responseMap);
+    }
     responseMap.put("result","success");
-    if(headers != null){
-      CSVParser<List<List<String>>> parser = new CSVParser<>(this.state.getfReader(),headers);
-      responseMap.put("data",parser.getRows());
-      Serializer serializer = new Serializer();
-      return serializer.serialize(responseMap);
-    }
-    else{
-      CSVParser<List<List<String>>> parser = new CSVParser<>(this.state.getfReader(),"false");
-      responseMap.put("data",parser.getRows());
-      Serializer serializer = new Serializer();
-      return serializer.serialize(responseMap);
-    }
+    System.out.println(this.state.getfReader());
+    CSVParser<List<List<String>>> parser = new CSVParser<>(this.state.getfReader(),headers);
+    responseMap.put("data",parser.getRows());
+    Serializer serializer = new Serializer();
+    return serializer.serialize(responseMap);
+
   }
 }

@@ -18,4 +18,12 @@ public class ParsedData {
   public boolean getLoadedVal() {
     return this.loaded;
   }
+
+  public void setfReader(FileReader fileReader) {
+    this.fReader = fileReader;
+  }
+
+  public void setLoadedVal(boolean val) {
+    this.loaded = val;
+  }
 }
