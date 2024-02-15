@@ -11,7 +11,7 @@ import spark.Route;
 public class searchcsv implements Route {
   private final CSVData state;
 
-  public searchcsv(CSVData state){
+  public searchcsv(){
     this.state = state;
 
   }
