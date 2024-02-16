@@ -1,6 +1,6 @@
-package edu.brown.cs.student.main.Server;
+package edu.brown.cs.student.main.server;
 
-import edu.brown.cs.student.main.CSV.ParsedData;
+import edu.brown.cs.student.main.csv.ParsedData;
 import java.util.HashMap;
 import java.util.Map;
 import spark.Request;

@@ -1,10 +1,10 @@
-package edu.brown.cs.student.main.Server;
+package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
 
-import edu.brown.cs.student.main.CSV.ParsedData;
-import edu.brown.cs.student.main.ACS.BroadbandAPI;
-import edu.brown.cs.student.main.ACS.DatasourceException;
+import edu.brown.cs.student.main.csv.ParsedData;
+import edu.brown.cs.student.main.acs.BroadbandAPI;
+import edu.brown.cs.student.main.acs.DatasourceException;
 import java.io.IOException;
 import spark.Spark;
 

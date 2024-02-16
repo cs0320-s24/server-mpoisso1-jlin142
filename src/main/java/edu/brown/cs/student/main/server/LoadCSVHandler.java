@@ -1,7 +1,7 @@
-package edu.brown.cs.student.main.Server;
+package edu.brown.cs.student.main.server;
 
-import edu.brown.cs.student.main.CSV.CSVParser;
-import edu.brown.cs.student.main.CSV.ParsedData;
+import edu.brown.cs.student.main.csv.CSVParser;
+import edu.brown.cs.student.main.csv.ParsedData;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.HashMap;

@@ -1,10 +1,10 @@
-package edu.brown.cs.student.main.Server;
+package edu.brown.cs.student.main.server;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
-import edu.brown.cs.student.main.ACS.BroadbandAPI;
-import edu.brown.cs.student.main.ACS.BroadbandData;
+import edu.brown.cs.student.main.acs.BroadbandAPI;
+import edu.brown.cs.student.main.acs.BroadbandData;
 import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.HashMap;

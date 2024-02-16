@@ -1,6 +1,5 @@
-package edu.brown.cs.student.main.CSV;
+package edu.brown.cs.student.main.csv;
 
-import java.io.FileReader;
 import java.util.List;
 
 

@@ -1,7 +1,7 @@
-package edu.brown.cs.student.main.Server;
+package edu.brown.cs.student.main.server;
 
-import edu.brown.cs.student.main.CSV.CSVSearcher;
-import edu.brown.cs.student.main.CSV.ParsedData;
+import edu.brown.cs.student.main.csv.CSVSearcher;
+import edu.brown.cs.student.main.csv.ParsedData;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.ACS;
+package edu.brown.cs.student.main.acs;
 
 /**
  * This class extends the exceptions.
