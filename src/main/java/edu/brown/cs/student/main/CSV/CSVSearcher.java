@@ -23,7 +23,7 @@ public class CSVSearcher {
    * @return List of row indexes that were printed
    */
   public List<List<String>> search(List<List<String>> rows, String value, boolean header) {
-    if (this.checkEmpty()) {
+    if (this.checkEmpty(rows)) {
       // Fix this for later
       System.err.println("CSV is empty. There is nothing to search over.");
       return new ArrayList<>();
@@ -56,7 +56,7 @@ public class CSVSearcher {
    * @return same as above
    */
   public List<List<String>> search(List<List<String>> rows,String value, String colName) {
-    if (this.checkEmpty()) {
+    if (this.checkEmpty(rows)) {
       System.err.println("CSV is empty. There is nothing to search over.");
       return new ArrayList<>();
     }
@@ -104,7 +104,7 @@ public class CSVSearcher {
    * @return same as above
    */
   public List<List<String>> search(List<List<String>> rows,String value, boolean header, int colIndex) {
-    if (this.checkEmpty()) {
+    if (this.checkEmpty(rows)) {
       System.err.println("CSV is empty. There is nothing to search over.");
       return new ArrayList<>();
     }
