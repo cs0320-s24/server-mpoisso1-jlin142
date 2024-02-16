@@ -5,16 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CSVSearcher {
-  private final CSVParser<List<String>> parser;
 
   /**
    * To be instantiated, this class need a parser object to search over.
    *
-   * @param parser
    * @throws IOException
    */
-  public CSVSearcher(CSVParser<List<String>> parser) throws IOException {
-    this.parser = parser;
+  public CSVSearcher() throws IOException {
   }
 
   /**
@@ -25,8 +22,8 @@ public class CSVSearcher {
    * @param header boolean describing if there is a header
    * @return List of row indexes that were printed
    */
-  public List<List<String>> search(String value, boolean header) {
-    if (this.checkEmpty()) {
+  public List<List<String>> search(List<List<String>> rows, String value, boolean header) {
+    if (this.checkEmpty(rows)) {
       // Fix this for later
       System.err.println("CSV is empty. There is nothing to search over.");
       return new ArrayList<>();
@@ -34,7 +31,6 @@ public class CSVSearcher {
 
     List<List<String>> res = new ArrayList<>();
 
-    List<List<String>> rows = this.parser.getRows();
     if (header) {
       rows.remove(0);
     }
@@ -44,7 +40,7 @@ public class CSVSearcher {
       for (String s : row) {
         if (value.equals(s)) {
           res.add(row);
-//          System.out.println(row);
+          //          System.out.println(row);
           break;
         }
       }
@@ -59,8 +55,8 @@ public class CSVSearcher {
    * @param colName name of the column that we are restricted to
    * @return same as above
    */
-  public List<List<String>> search(String value, String colName) {
-    if (this.checkEmpty()) {
+  public List<List<String>> search(List<List<String>> rows,String value, String colName) {
+    if (this.checkEmpty(rows)) {
       System.err.println("CSV is empty. There is nothing to search over.");
       return new ArrayList<>();
     }
@@ -70,7 +66,6 @@ public class CSVSearcher {
     }
 
     List<List<String>> res = new ArrayList<>();
-    List<List<String>> rows = this.parser.getRows();
     List<String> firstRow = rows.remove(0);
 
     int colNum = -1;
@@ -91,7 +86,7 @@ public class CSVSearcher {
         List<String> row = rows.get(i);
         if (value.equals(row.get(colNum))) {
           res.add(row);
-//          System.out.println(row);
+          //          System.out.println(row);
         }
       } catch (Exception e) {
         System.err.println("Row " + i + " does not have a value for " + colName + ".");
@@ -108,14 +103,13 @@ public class CSVSearcher {
    * @param colIndex index of column we are restricted to
    * @return same as above
    */
-  public List<List<String>> search(String value, boolean header, int colIndex) {
-    if (this.checkEmpty()) {
+  public List<List<String>> search(List<List<String>> rows,String value, boolean header, int colIndex) {
+    if (this.checkEmpty(rows)) {
       System.err.println("CSV is empty. There is nothing to search over.");
       return new ArrayList<>();
     }
 
     List<List<String>> res = new ArrayList<>();
-    List<List<String>> rows = this.parser.getRows();
     if (header) {
       rows.remove(0);
     }
@@ -139,7 +133,7 @@ public class CSVSearcher {
         List<String> row = rows.get(i);
         if (value.equals(row.get(colIndex))) {
           res.add(row);
-//          System.out.println(row);
+          //          System.out.println(row);
         }
       } catch (Exception e) {
         // throw error saying that col value dne
@@ -155,8 +149,8 @@ public class CSVSearcher {
    *
    * @return
    */
-  private boolean checkEmpty() {
-    if (this.parser.getRows().size() == 0) {
+  private boolean checkEmpty(List<List<String>> rows) {
+    if (rows.size() == 0) {
       return true;
     }
     return false;

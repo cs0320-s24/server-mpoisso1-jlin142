@@ -8,10 +8,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
+
 public class CSVParser<T> {
-  private final List<List<String>> rows;
-  public CSVParser(Reader reader, Boolean headers) {
-    this.rows = this.parse(reader, headers);
+  static final Pattern regexSplitCSVRow =
+      Pattern.compile("," + "(?=([^\\\"]*\\\"[^\\\"]*\\\")*(?![^\\\"]*\\\"))");
+
+
+  public CSVParser(Reader reader, String headers) {
   }
 
   /**
@@ -22,7 +25,7 @@ public class CSVParser<T> {
    *     (Strings, files,etc.)
    * @param headers Boolean indicator of header appearance
    */
-  private List<List<String>> parse(Reader reader, Boolean headers) {
+  public List<List<String>> parse(Reader reader, String headers) {
     int rowCounter = 0;
     int numElems = 0;
     BufferedReader bufferedReader = new BufferedReader(reader);
@@ -32,10 +35,10 @@ public class CSVParser<T> {
       while ((line = bufferedReader.readLine()) != null) {
         String[] result = regexSplitCSVRow.split(line);
         List<String> row = List.of(result);
-        if (headers && rowCounter == 0) {
+        if (headers == "true" && rowCounter == 0) {
           numElems = row.size();
         }
-        if (headers && rowCounter > 0 && row.size() != numElems) {
+        if (headers == "true" && rowCounter > 0 && row.size() != numElems) {
           // Should not be doing this
           // error message should be malformed csv
           // return empty list
@@ -51,11 +54,22 @@ public class CSVParser<T> {
     return rows;
   }
 
-  public List<List<String>> getRows() {
-    // proxy for rows
-    return Collections.unmodifiableList(this.rows);
+  /**
+   * Postprocesses a string after regular expression.
+   *
+   * @param arg the string to be postprocessed
+   * @return
+   */
+  public static String postprocess(String arg) {
+    return arg
+        // Remove extra spaces at beginning and end of the line
+        .trim()
+        // Remove a beginning quote, if present
+        .replaceAll("^\"", "")
+        // Remove an ending quote, if present
+        .replaceAll("\"$", "")
+        // Replace double-double-quotes with double-quotes
+        .replaceAll("\"\"", "\"");
   }
-
-  static final Pattern regexSplitCSVRow =
-      Pattern.compile("," + "(?=([^\\\"]*\\\"[^\\\"]*\\\")*(?![^\\\"]*\\\"))");
 }
+
