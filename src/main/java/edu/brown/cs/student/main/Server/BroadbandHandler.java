@@ -1,17 +1,11 @@
-package edu.brown.cs.student.main.server;
+package edu.brown.cs.student.main.Server;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
-import edu.brown.cs.student.main.acs.BroadbandAPI;
-import edu.brown.cs.student.main.acs.BroadbandData;
-import java.io.IOException;
+import edu.brown.cs.student.main.ACS.BroadbandAPI;
+import edu.brown.cs.student.main.ACS.BroadbandData;
 import java.lang.reflect.Type;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

@@ -1,11 +1,7 @@
-package edu.brown.cs.student.main.server;
+package edu.brown.cs.student.main.Server;
 
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
-import com.squareup.moshi.Types;
 import edu.brown.cs.student.main.CSV.CSVSearcher;
 import edu.brown.cs.student.main.CSV.ParsedData;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,16 +12,18 @@ import spark.Route;
 /**
  * This is the searchcsv handler class.
  */
-public class searchcsv implements Route {
+public class SearchCSVHandler implements Route {
   private final ParsedData state;
+  private final Serializer serializer;
 
   /**
    * The constructor of the searchcsv class.
    *
    * @param state an instance of the ParsedData class that holds the most recently loaded CSV
    */
-  public searchcsv(ParsedData state) {
+  public SearchCSVHandler(ParsedData state) {
     this.state = state;
+    this.serializer = new Serializer();
   }
 
   /**
@@ -45,12 +43,12 @@ public class searchcsv implements Route {
     String colIndex = request.queryParams("colIndex");
     if (target == null) {
       responseMap.put("error_bad_request","request was missing the target field");
-      return this.serialize(responseMap);
+      return this.serializer.serialize(responseMap);
     }
     if (this.state != null) {
       if (!this.state.getLoadedVal()) {
         responseMap.put("error_datasource", "No CSV file has been loaded!");
-        return this.serialize(responseMap);
+        return this.serializer.serialize(responseMap);
       }
     }
     if (colName == null && colIndex == null && headers != null){
@@ -60,7 +58,7 @@ public class searchcsv implements Route {
       responseMap.put("parameters",List.of(target,headers));
       responseMap.put("data",this.state.getContent());
       responseMap.put("retrieved data",result);
-      return this.serialize(responseMap);
+      return this.serializer.serialize(responseMap);
     }
     else if(headers != null && colIndex != null){
       Integer index = Integer.getInteger(colIndex);
@@ -70,7 +68,7 @@ public class searchcsv implements Route {
       responseMap.put("parameters", List.of(target,colName));
       responseMap.put("data",this.state.getContent());
       responseMap.put("retrieved data",result);
-      return this.serialize(responseMap);
+      return this.serializer.serialize(responseMap);
     }
     else if(colName != null){
       List<List<String>> result = searcher.search(this.state.getContent(),target,colName);
@@ -78,20 +76,20 @@ public class searchcsv implements Route {
       responseMap.put("parameters",List.of(target,colName));
       responseMap.put("data",this.state.getContent());
       responseMap.put("retrieved data",result);
-      return this.serialize(responseMap);
+      return this.serializer.serialize(responseMap);
     }
     return null;
   }
 
-  private String serialize(Map<String, Object> responseMap) {
-    Type stringObjectMap = Types.newParameterizedType(Map.class,String.class,Object.class);
-    try {
-      Moshi moshi = new Moshi.Builder().build();
-      JsonAdapter<Map<String,Object>> adapter = moshi.adapter(stringObjectMap);
-      return adapter.toJson(responseMap);
-    } catch (Exception e) {
-      e.printStackTrace();
-      throw e;
-    }
-  }
+//  private String serialize(Map<String, Object> responseMap) {
+//    Type stringObjectMap = Types.newParameterizedType(Map.class,String.class,Object.class);
+//    try {
+//      Moshi moshi = new Moshi.Builder().build();
+//      JsonAdapter<Map<String,Object>> adapter = moshi.adapter(stringObjectMap);
+//      return adapter.toJson(responseMap);
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//      throw e;
+//    }
+//  }
 }

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -14,7 +15,7 @@ public class CSVParser<T> {
       Pattern.compile("," + "(?=([^\\\"]*\\\"[^\\\"]*\\\")*(?![^\\\"]*\\\"))");
 
 
-  public CSVParser(Reader reader, String headers) {
+  public CSVParser() {
   }
 
   /**
@@ -25,7 +26,7 @@ public class CSVParser<T> {
    *     (Strings, files,etc.)
    * @param headers Boolean indicator of header appearance
    */
-  public List<List<String>> parse(Reader reader, String headers) {
+  public List<List<String>> parse(Reader reader, Boolean headers) {
     int rowCounter = 0;
     int numElems = 0;
     BufferedReader bufferedReader = new BufferedReader(reader);
@@ -33,17 +34,21 @@ public class CSVParser<T> {
     try {
       String line;
       while ((line = bufferedReader.readLine()) != null) {
-        String[] result = regexSplitCSVRow.split(line);
-        List<String> row = List.of(result);
-        if (headers == "true" && rowCounter == 0) {
+        List<String> row = Arrays.asList(regexSplitCSVRow.split(line));
+        for (int i = 0; i < row.size(); i++) {
+          String e = row.get(i);
+          row.set(i, postprocess(e));
+        }
+        if (headers && rowCounter == 0) {
           numElems = row.size();
         }
-        if (headers == "true" && rowCounter > 0 && row.size() != numElems) {
+        if (headers && rowCounter > 0 && row.size() != numElems) {
           // Should not be doing this
           // error message should be malformed csv
           // return empty list
-          System.err.println("Row " + rowCounter + " was malformed!");
-          continue;
+//          System.err.println("Row " + rowCounter + " was malformed!");
+//          continue;
+          return new ArrayList<>();
         }
         rows.add(row);
         rowCounter++;
