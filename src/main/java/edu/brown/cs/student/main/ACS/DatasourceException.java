@@ -1,5 +1,8 @@
 package edu.brown.cs.student.main.ACS;
 
+/**
+ * This class extends the exceptions.
+ */
 public class DatasourceException extends Exception {
   // The root cause of this datasource problem
   private final Throwable cause;

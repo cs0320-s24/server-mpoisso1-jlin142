@@ -3,10 +3,20 @@ package edu.brown.cs.student.main.CSV;
 import java.io.FileReader;
 import java.util.List;
 
+
+/**
+ * This class represented the parsed data.
+ */
 public class ParsedData {
   private boolean loaded;
   private List<List<String>> content;
 
+  /**
+   * The constructor accepts the parsed data content and a boolean indicated whether it is loaded.
+   *
+   * @param loaded
+   * @param content
+   */
   public ParsedData(boolean loaded,List<List<String>> content) {
     this.loaded = loaded;
     this.content = content;

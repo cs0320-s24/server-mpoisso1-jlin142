@@ -13,14 +13,28 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+/**
+ * This is the Broadband Handler class. It implements Route.
+ */
 public class BroadbandHandler implements Route {
   private final BroadbandAPI state;
 
-
+  /**
+   * This constructor accepts the current state.
+   *
+   * @param state
+   */
   public BroadbandHandler(BroadbandAPI state){
     this.state = state;
   }
 
+  /**
+   * This method handles the api request and response.
+   *
+   * @param request server request
+   * @param response server response
+   * @return json object
+   */
   @Override
   public Object handle(Request request, Response response) {
     Moshi moshi = new Moshi.Builder().build();
