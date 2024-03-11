@@ -42,11 +42,6 @@ public class CSVParser<T> {
           numElems = row.size();
         }
         if (headers && rowCounter > 0 && row.size() != numElems) {
-          // Should not be doing this
-          // error message should be malformed csv
-          // return empty list
-//          System.err.println("Row " + rowCounter + " was malformed!");
-//          continue;
           return new ArrayList<>();
         }
         rows.add(row);

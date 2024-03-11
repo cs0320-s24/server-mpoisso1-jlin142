@@ -42,7 +42,7 @@ public class LoadCSVHandler implements Route {
     String filename;
     try {
       filename = request.queryParams("filepath");
-      if (!filename.contains("/Data")){
+      if (!filename.contains("/edu/brown/cs/student/main/Data")){
         responseMap.put("message", "File not accessible!");
         return this.serializer.serialize(responseMap);
       }
@@ -60,21 +60,4 @@ public class LoadCSVHandler implements Route {
     }
   }
 
-//  /**
-//   * This helper method converts the passed into Map into a JSON Map.
-//   *
-//   * @param responseMap A Map of String and Object key pairs that is returned
-//   * @return returns a converted JSON object
-//   */
-//  private String serialize(Map<String, Object> responseMap) {
-//    Type stringObjectMap = Types.newParameterizedType(Map.class,String.class,Object.class);
-//    try {
-//      Moshi moshi = new Moshi.Builder().build();
-//      JsonAdapter<Map<String,Object>> adapter = moshi.adapter(stringObjectMap);
-//      return adapter.toJson(responseMap);
-//    } catch (Exception e) {
-//      e.printStackTrace();
-//      throw e;
-//    }
-//  }
 }
